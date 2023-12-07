@@ -8,10 +8,16 @@ class Video:
     def __init__(self, video_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.video_id = video_id
-        self.vid_title = self.get_video_info()['items'][0]['snippet']['title']
-        self.vid_url = f"https://www.youtube.com/watch?v={self.video_id}"
-        self.vid_view_count = self.get_video_info()['items'][0]['statistics']['viewCount']
-        self.vid_like_count = self.get_video_info()['items'][0]['statistics']['likeCount']
+        try:
+            self.vid_title = self.get_video_info()['items'][0]['snippet']['title']
+            self.vid_url = f"https://www.youtube.com/watch?v={self.video_id}"
+            self.vid_view_count = self.get_video_info()['items'][0]['statistics']['viewCount']
+            self.vid_like_count = self.get_video_info()['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.vid_title = None
+            self.vid_url = None
+            self.vid_view_count = None
+            self.vid_like_count = None
 
     def __str__(self):
         return f'{self.vid_title}'
